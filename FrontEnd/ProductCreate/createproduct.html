@@ -41,16 +41,11 @@
     <div class="container">
       <h1>Add New Product</h1>
       <p>Have any question or suggestion? drop us a message</p>
-      <form>
+      <div>
         <div class="row">
           <div class="column">
             <label for="product_name"> Product Name: </label>
-            <input
-              type="text"
-              id="product_name"
-              placeholder="Product Name"
-              maxlength="50"
-            />
+            <input type="text" id="product_name" placeholder="Product Name" />
           </div>
         </div>
         <div class="row">
@@ -72,13 +67,44 @@
               id="description"
               placeholder="Product Description"
               rows="4"
-              maxlength="500"
             ></textarea>
           </div>
         </div>
-        <button>submit</button>
-      </form>
+        <button id="btn_create">submit</button>
+      </div>
     </div>
   </body>
-  <script></script>
+  <script>
+    const buttonCreate = document.getElementById("btn_create");
+    const onsubmit = async () => {
+      const elementName = document.getElementById("product_name");
+      const elementRating = document.getElementById("rating");
+      const elementDes = document.getElementById("description");
+
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        product_name: elementName.value,
+        description: elementDes.value,
+        rating: elementRating.value,
+      });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch("http://localhost:3000/products/create", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error", error))
+        .finally(() => {
+          alert("input sukses");
+        });
+    };
+    buttonCreate.onclick = onsubmit;
+  </script>
 </html>

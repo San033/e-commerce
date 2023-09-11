@@ -26,11 +26,11 @@ class ProductsModels {
   }
   async delete(id) {
     try {
-      // const findProducts = await db(this.tableName).where("id", id).first();
-      // if (!findProducts?.id) throw new Error("data tidak ada");
+      const findProducts = await db(this.tableName).where("id", id).first();
+      if (!findProducts?.id) throw new Error("data tidak ada");
 
       await db(this.tableName).where("id", id).del();
-      // return findProducts;
+      return findProducts;
     } catch (err) {
       console.log(err);
     }

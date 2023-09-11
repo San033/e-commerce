@@ -1,57 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <style type="text/css"></style>
-</head>
-<body>
+    <style>
+      /* Style for the list component */
+      #result {
+        margin-top: 20px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #f5f5f5;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      li:hover {
+        background-color: #e0e0e0;
+      }
+    </style>
+  </head>
+  <body>
     <section class="header">
-        <a href="#"><img src="/image/testlogo.png" 
-            width="200px"
-            height= auto
-            class="logo" alt=""></a>
-        <div>
-            <ul class="navbar">
-                <li><a class="active" href="/index.html">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="/Product/product.html">Product</a></li>
-                <li><a href="cart.html"><img src="/image/cart-shopping-solid.svg"
-                    width="20px"
-                    height=auto alt=""></a></li>
-            </ul>
-        </div>
-        
+      <a href="#"
+        ><img
+          src="/image/testlogo.png"
+          width="200px"
+          height="auto"
+          class="logo"
+          alt=""
+      /></a>
+      <div>
+        <ul class="navbar">
+          <li><a class="active" href="/index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="/Product/product.html">Product</a></li>
+          <li>
+            <a href="cart.html"
+              ><img
+                src="/image/cart-shopping-solid.svg"
+                width="20px"
+                height="auto"
+                alt=""
+            /></a>
+          </li>
+        </ul>
+      </div>
     </section>
     <!------------form Box------------->
     <div class="container">
-        <h1>Search Product</h1>
-        <p>Please Input Product ID</p>
-        <form>
-          <div class="row">
-            <div class="column">
-              <label for="id"> Product ID: </label>
-              <input
-                type="text"
-                id="id"
-                placeholder="Product ID"
-                maxlength="30"
-              />
-            </div>
+      <h1>Search Product</h1>
+      <p>Please Input Product ID</p>
+      <div>
+        <div class="row">
+          <div class="column">
+            <label for="id"> Product ID: </label>
+            <input type="text" id="id" placeholder="Product ID" />
           </div>
-          <button>Search</button>
-          </div>
-         
-        </form>
+        </div>
+        <button id="btn_search">Search</button>
       </div>
-</body>
+    </div>
+    <div id="result"></div>
+  </body>
+  <script>
+    const buttonSearch = document.getElementById("btn_search");
+    const onrender = async () => {
+      const inputEl = document.getElementById("id");
+      const id = inputEl.value;
+      var requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
+      const data = await fetch(
+        "http://localhost:3000/products/all",
+        requestOptions
+      ).then((response) => response.json());
+      // Create an HTML list
+      const productList = document.createElement("ul");
+      data.products.forEach((product) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `Product ID: ${product.id}, Product Name: ${product.product_name}`;
+        productList.appendChild(listItem);
+      });
+
+      // Display the list in your HTML
+      const resultContainer = document.getElementById("result");
+      resultContainer.innerHTML = ""; // Clear previous results
+      resultContainer.appendChild(productList);
+    };
+    onrender();
+  </script>
 </html>
