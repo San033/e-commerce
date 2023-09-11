@@ -157,13 +157,13 @@ body{
 }
 .container{
     background-color: aliceblue;
-    width: 70%;
+    width:fit-content;
     min-width: 420px;
     padding: 50px 50px;
     transform: translate(-50%, -50%);
     position: absolute;
     left: 50%;
-    top: 80%;
+    top: 100%;
     border-radius: 10px;
     box-shadow: 20px 30px 25px rgb(0, 0, 0, 0.15);
     display: flex;
